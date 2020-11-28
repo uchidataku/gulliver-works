@@ -203,7 +203,7 @@ Gulliver Worksの各プロジェクトについて
 
 ## 参照
 ### OpenAPI
-https://github.com/simula-labs/simula-works_spec
+https://github.com/uchidataku/gulliver-works_spec
 
 各エンドポイントのURI・リクエストパラメーター・レスポンスなどの詳細を記載しています。
 
