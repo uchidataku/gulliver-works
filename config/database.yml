@@ -9,12 +9,12 @@ default: &default
 
 development:
   <<: *default
-  database: simula-works_development
+  database: gulliver-works_development
 
 test:
   <<: *default
-  database: simula-works_test
+  database: gulliver-works_test
 
 production:
   <<: *default
-  database: simula-works_production
+  database: gulliver-works_production
