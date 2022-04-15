@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # 雇用形態
 employment_statuses = [
   { name: '正社員' }, { name: '契約社員' }, { name: 'アルバイト' }, { name: '新卒' }, { name: '派遣社員' }

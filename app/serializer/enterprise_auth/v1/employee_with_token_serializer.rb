@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module EnterpriseAuth
   module V1
     # EmployeeWithTokenSerializer

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # 職種
 main_categories =
   [{ name: 'コンサル',

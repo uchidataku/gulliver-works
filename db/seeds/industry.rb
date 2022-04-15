@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # 業種
 industry_categories =
   [{ name: '金融・保険',

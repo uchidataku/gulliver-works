@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Industry
 class Industry < ApplicationRecord
   belongs_to :industry_category

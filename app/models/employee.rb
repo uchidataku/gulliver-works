@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Employee
 class Employee < ApplicationRecord
   include JWT::Authenticatable

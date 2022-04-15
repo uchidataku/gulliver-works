@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # 例外対応
 module ExceptionHandler
   extend ActiveSupport::Concern

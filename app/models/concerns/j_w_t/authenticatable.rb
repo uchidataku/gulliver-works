@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module JWT
   # JWT Authenticatable
   module Authenticatable
@@ -8,7 +9,7 @@ module JWT
       # JWT失効させる
       def invalidate_jwt!(token)
         payload, _header = JWT::Helper.decode(token)
-        fail JWT::InvalidSubError if payload['sub'] != id
+        raise JWT::InvalidSubError if payload['sub'] != id
 
         Jti.destroy(payload['jti'])
       end

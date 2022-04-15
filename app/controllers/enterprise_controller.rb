@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # EnterpriseController
 class EnterpriseController < ActionController::API
   include ExceptionHandler
@@ -9,9 +10,7 @@ class EnterpriseController < ActionController::API
 
   def render(*args)
     options = args.extract_options!
-    if options[:json].is_a?(Enumerable)
-      options[:adapter] = :json
-    end
+    options[:adapter] = :json if options[:json].is_a?(Enumerable)
     args << options
     super(*args)
   end

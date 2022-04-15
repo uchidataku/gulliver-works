@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # 都道府県
 prefectures = [
   { name: '北海道' }, { name: '青森県' }, { name: '岩手県' }, { name: '宮城県' },

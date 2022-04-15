@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module V1
   # AccountSerializer
   class AccountSerializer < ActiveModel::Serializer

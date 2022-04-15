@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # EnterpriseAbility
 class EnterpriseAbility
   include CanCan::Ability

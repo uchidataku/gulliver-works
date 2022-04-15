@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # OccupationSubCategory
 class OccupationSubCategory < ApplicationRecord
   has_many :occupations, dependent: :destroy

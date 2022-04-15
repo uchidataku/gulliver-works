@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Account
 class Account < ApplicationRecord
   include JWT::Authenticatable

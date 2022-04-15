@@ -2663,3 +2663,175 @@ Migrating to CreateEmploymentStatuses (20201109102553)
   [1m[36mPrefecture Load (0.4ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "宮崎県"], ["LIMIT", 1]]
   [1m[36mPrefecture Load (0.5ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "鹿児島県"], ["LIMIT", 1]]
   [1m[36mPrefecture Load (0.4ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "沖縄県"], ["LIMIT", 1]]
+  [1m[35m (233.5ms)[0m  [1m[35mCREATE DATABASE "gulliver-works_development" ENCODING = 'unicode'[0m
+  [1m[35m (234.6ms)[0m  [1m[35mCREATE DATABASE "gulliver-works_test" ENCODING = 'unicode'[0m
+  [1m[35m (7.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6534033543814618275)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAccounts (20201105094739)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (5.8ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "pgcrypto"[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "accounts" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "email" character varying NOT NULL, "password_digest" character varying NOT NULL, "email_verification_status" integer DEFAULT 0 NOT NULL, "email_verification_token" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON TABLE "accounts" IS 'アカウント'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."email" IS 'メールアドレス'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."password_digest" IS 'パスワードのハッシュ値'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."email_verification_status" IS 'メールアドレスの確認状態'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "accounts"."email_verification_token" IS 'メール確認用のトークン'[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201105094739"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJtis (20201105103105)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "jtis" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "jtis" IS 'JWTのホワイトリスト'[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201105103105"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCompanies (20201108043701)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "companies" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "name_kana" character varying NOT NULL, "head_office_location" character varying NOT NULL, "year_of_establishment" character varying NOT NULL, "hp_url" character varying, "phone" character varying, "capital" integer NOT NULL, "is_listed" boolean DEFAULT FALSE NOT NULL, "representative" character varying NOT NULL, "representative_kana" character varying NOT NULL, "net_sales" character varying, "numbers_of_employees" character varying NOT NULL, "average_age" integer, "business_summary" text NOT NULL, "corporate_pr" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "companies" IS '企業'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."name" IS '法人名'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."name_kana" IS '法人名(ふりがな)'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."head_office_location" IS '本店所在地'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."year_of_establishment" IS '設立年'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."hp_url" IS 'HPのURL'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."phone" IS '電話番号'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."capital" IS '資本金'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."is_listed" IS '上場 / 非上場'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."representative" IS '代表指名'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."representative_kana" IS '代表氏名(ふりがな)'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."net_sales" IS '前年度の売上高'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."numbers_of_employees" IS '従業員数'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."average_age" IS '平均年齢'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."business_summary" IS '事業概要'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "companies"."corporate_pr" IS '企業PR'[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108043701"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEmployees (20201108044639)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.0ms)[0m  [1m[35mCREATE TABLE "employees" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "email" character varying NOT NULL, "password_digest" character varying NOT NULL, "email_verification_status" integer DEFAULT 0 NOT NULL, "email_verification_token" uuid, "company_id" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_15ca1438d5"
+FOREIGN KEY ("company_id")
+  REFERENCES "companies" ("id")
+)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_employees_on_company_id" ON "employees" ("company_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "employees" IS '従業員'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."email" IS 'メールアドレス'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."password_digest" IS 'パスワードのハッシュ値'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."email_verification_status" IS 'メールアドレスの確認状態'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "employees"."email_verification_token" IS 'メール確認用のトークン'[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108044639"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUniqueIndexToAccountAndCompany (20201108063456)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_accounts_on_email" ON "accounts" ("email")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_employees_on_email" ON "employees" ("email")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_companies_on_name" ON "companies" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108063456"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateOccupationMainCategories (20201108070453)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE TABLE "occupation_main_categories" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON TABLE "occupation_main_categories" IS '職種「大項目」'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "occupation_main_categories"."name" IS '職種「大項目」名'[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_occupation_main_categories_on_name" ON "occupation_main_categories" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108070453"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateOccupationSubCategories (20201108070834)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "occupation_sub_categories" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "occupation_main_category_id" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_18a57dd181"
+FOREIGN KEY ("occupation_main_category_id")
+  REFERENCES "occupation_main_categories" ("id")
+)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_occupation_sub_categories_on_occupation_main_category_id" ON "occupation_sub_categories" ("occupation_main_category_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "occupation_sub_categories" IS '職種「中項目」'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "occupation_sub_categories"."name" IS '職種「中項目」名'[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_occupation_sub_categories_on_name" ON "occupation_sub_categories" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108070834"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateOccupations (20201108071219)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE TABLE "occupations" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "occupation_sub_category_id" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_182c30df9d"
+FOREIGN KEY ("occupation_sub_category_id")
+  REFERENCES "occupation_sub_categories" ("id")
+)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_occupations_on_occupation_sub_category_id" ON "occupations" ("occupation_sub_category_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON TABLE "occupations" IS '職種「小項目」'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMENT ON COLUMN "occupations"."name" IS '職種「小項目」名'[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_occupations_on_name" ON "occupations" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108071219"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateIndustryCategories (20201108080337)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "industry_categories" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "industry_categories" IS '業種カテゴリー'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "industry_categories"."name" IS '業種カテゴリー名'[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_industry_categories_on_name" ON "industry_categories" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108080337"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateIndustries (20201108080711)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "industries" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "industry_category_id" uuid, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_1d5e3d607a"
+FOREIGN KEY ("industry_category_id")
+  REFERENCES "industry_categories" ("id")
+)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX "index_industries_on_industry_category_id" ON "industries" ("industry_category_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "industries" IS '業種'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "industries"."name" IS '業種名'[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_industries_on_name_and_industry_category_id" ON "industries" ("name", "industry_category_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108080711"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePrefectures (20201108082801)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "prefectures" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "prefectures" IS '都道府県'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "prefectures"."name" IS ' 都道府県名'[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_prefectures_on_name" ON "prefectures" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201108082801"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEmploymentStatuses (20201109102553)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "employment_statuses" ("id" uuid DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY, "name" character varying NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON TABLE "employment_statuses" IS '雇用形態'[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMENT ON COLUMN "employment_statuses"."name" IS '雇用形態名'[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_employment_statuses_on_name" ON "employment_statuses" ("name")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20201109102553"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-04-15 09:11:43.799017"], ["updated_at", "2022-04-15 09:11:43.799017"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(6534033543814618275)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/public/v1/prefectures" for 172.29.0.1 at 2022-04-15 09:12:55 +0000
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Public::V1::PrefecturesController#index as */*
+  [1m[36mPrefecture Load (0.6ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures"[0m
+  ↳ app/controllers/public/v1/prefectures_controller.rb:9:in `index'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.11ms)
+Completed 200 OK in 10ms (Views: 4.1ms | ActiveRecord: 1.8ms | Allocations: 6702)
+
+
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPrefecture Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "都道府県_1"], ["LIMIT", 1]]
+  [1m[36mPrefecture Create (1.1ms)[0m  [1m[32mINSERT INTO "prefectures" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "都道府県_1"], ["created_at", "2022-04-15 09:13:48.234099"], ["updated_at", "2022-04-15 09:13:48.234099"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPrefecture Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "prefectures" WHERE "prefectures"."name" = $1 LIMIT $2[0m  [["name", "都道府県_2"], ["LIMIT", 1]]
+  [1m[36mPrefecture Create (0.3ms)[0m  [1m[32mINSERT INTO "prefectures" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "都道府県_2"], ["created_at", "2022-04-15 09:13:49.433852"], ["updated_at", "2022-04-15 09:13:49.433852"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/public/v1/prefectures" for 172.29.0.1 at 2022-04-15 09:13:52 +0000
+Processing by Public::V1::PrefecturesController#index as */*
+  [1m[36mPrefecture Load (0.3ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures"[0m
+  ↳ app/controllers/public/v1/prefectures_controller.rb:9:in `index'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.47ms)
+Completed 200 OK in 19ms (Views: 15.9ms | ActiveRecord: 2.8ms | Allocations: 7567)
+
+
+Started GET "/public/v1/prefectures" for 172.29.0.1 at 2022-04-15 09:14:55 +0000
+Processing by Public::V1::PrefecturesController#index as */*
+  [1m[36mPrefecture Load (0.2ms)[0m  [1m[34mSELECT "prefectures".* FROM "prefectures"[0m
+  ↳ app/controllers/public_controller.rb:11:in `render'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Json (0.38ms)
+Completed 200 OK in 11ms (Views: 6.4ms | ActiveRecord: 3.7ms | Allocations: 4583)
+
+

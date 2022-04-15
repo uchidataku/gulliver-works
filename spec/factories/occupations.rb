@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryBot.define do
   factory :occupation do
     sequence(:name) { |n| "職種（小項目）_#{n}" }
